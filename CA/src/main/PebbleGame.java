@@ -2,6 +2,7 @@ package main;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
@@ -53,10 +54,9 @@ public class PebbleGame {
 		}
 	}
 	
-	protected synchronized Pebble pickUp() {
-		Random r = new Random();
-		int bagIndex = (int)(r.nextDouble()*3);
-		return takePebble(bagIndex);
+	protected synchronized Pebble pickUp(int i) {
+		
+		return bBags[i].takePebble();
 	}
 	
 	protected synchronized void drop() {
@@ -86,10 +86,65 @@ public class PebbleGame {
 	public static int getNumPlayers() { return PebbleGame.numPlayers; }
 	public static int numPebblesPerBag() { return PebbleGame.numPebblesPerBag; }
 	
-	class Player extends Thread {
+	public class Player extends Thread {
+
+		public boolean lock = false;
+		
+		ArrayList<Pebble> hand;
+		int indexLastHand;
+		
+		public Player() {
+			hand = new ArrayList<Pebble>();
+			int b = 0;
+			for(int i = 0;i<10;i++) {
+				b = chooseRandomBag();
+				hand.add(PebbleGame.this.pickUp(b));
+			}
+			this.indexLastHand = b;
+		}
 		
 		public void run() {
+			while(!PebbleGame.this.isDone()) {
+				while(!lock) {
+					drop();
+					if(lock) break;
+					pickUp();
+					checkWeight();
+				}
+			}
 			
+		}
+		
+		private void pickUp() {
+			int i = chooseRandomBag();
+			hand.add(PebbleGame.this.pickUp(i));
+			this.indexLastHand = i;
+			if(PebbleGame.this.bBags[i].pebbles.size()==0) {
+				// picked bag is empty
+			}
+		}
+		
+		private void drop() {
+			
+		}
+		
+		private void checkWeight() {
+			if(handWeight()==100 && hand.size()==10) {
+				
+			}
+		}
+		
+		public int handWeight() {
+			int weight = 0;
+			for(Pebble p:hand) {
+				weight += p.getWeight();
+			}
+			return weight;
+		}
+		
+		private int chooseRandomBag() {
+			Random r = new Random();
+			return (int)(r.nextDouble()*3);
 		}
 		
 		
