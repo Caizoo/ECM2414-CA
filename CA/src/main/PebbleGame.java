@@ -7,6 +7,8 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
+import test.TestPebbleGame;
+
 public class PebbleGame {
 	
 	public static final int PLAYER_PEBBLE_MULTIPLIER = 11;
@@ -19,7 +21,7 @@ public class PebbleGame {
 	private WhiteBag[] wBags;
 	
 	private boolean[] pushDownFlags = {false,false,false};
-	protected boolean lockAllThreads = false;
+	protected volatile boolean lockAllThreads = false;
 	private boolean finishedGame = false;
 	
 	public static void main(String[] args) throws IOException {
@@ -42,10 +44,6 @@ public class PebbleGame {
 	public PebbleGame(int numPlayers) {
 		PebbleGame.numPlayers = numPlayers;
 		PebbleGame.numPebblesPerBag = PebbleGame.numPlayers * PebbleGame.PLAYER_PEBBLE_MULTIPLIER;
-		players = new Player[numPlayers];
-		for(int i = 0;i<numPlayers;i++) {
-			players[i] = new Player();
-		}
 		bBags = new BlackBag[3];
 		wBags = new WhiteBag[3];
 		for(int i = 0;i<3;i++) {
@@ -57,42 +55,58 @@ public class PebbleGame {
 				bBags[j].pebbles.add(new Pebble());
 			}
 		}
-	}
-	
-	public void mainLoop() {
-		while(true) {
-			fillBags();
+		players = new Player[numPlayers];
+		for(int i = 0;i<numPlayers;i++) {
+			players[i] = new Player();
 		}
 	}
 	
+	public void mainLoop() {
+		for(Player p:players) {
+			p.start();
+		}
+		while(!finishedGame) {
+			fillBags();
+		}
+		System.exit(0);
+	}
+	
 	protected synchronized Pebble pickUp(int i) {
-		
 		return bBags[i].takePebble();
 	}
 	
-	protected synchronized void drop() {
-		
+	protected synchronized void drop(int i, Pebble p) {
+		wBags[i].pebbles.add(p);
 	}
 	
 	
 	private void fillBags() {
 		if (lockAllThreads) {
+			System.out.println("Filling bags");
 			for (int i=0;i<3;i++) {
 				if (bBags[i].pebbles.size() == 0) {
 					bBags[i].fillPebbles(wBags[i].takeAllPebbles());
 				}
 			}
+			lockAllThreads=false;
 		}
-		lockAllThreads=false;
 	}
 	
 	private void priorityCheck() {
 		
 	}
 	
-	protected void finishGame() {
+	protected void finishGame(ArrayList<Pebble> hand) {
 		lockAllThreads=true;
-		
+		finishedGame=true;
+		TestPebbleGame.printHand(hand);
+		System.out.println("");
+		int i = 0;
+		for(Pebble p:hand) {
+			i+=p.getWeight();
+		}
+		System.out.println(i);
+		System.exit(0);
 	}
 	
 	public boolean isDone() { return finishedGame; }
@@ -114,7 +128,7 @@ public class PebbleGame {
 
 		public boolean lock = false;
 		
-		ArrayList<Pebble> hand;
+		volatile ArrayList<Pebble> hand;
 		int indexLastHand;
 		
 		public Player() {
@@ -129,13 +143,16 @@ public class PebbleGame {
 		
 		public void run() {
 			while(!PebbleGame.this.isDone()) {
-				while(!lockAllThreads) {
+				while(!PebbleGame.this.lockAllThreads) {
 					drop();
-					if(lockAllThreads) break;
+					TestPebbleGame.printHand(hand);
+					if(PebbleGame.this.lockAllThreads) break;
 					pickUp();
+					TestPebbleGame.printHand(hand);
 					checkWeight();
+					// test calls
 				}
-				if (lockAllThreads) yield();
+				if (PebbleGame.this.lockAllThreads) yield();
 			}
 			
 		}
@@ -146,22 +163,21 @@ public class PebbleGame {
 			this.indexLastHand = i;
 			if(PebbleGame.this.bBags[i].pebbles.size()==0) {
 				// picked bag is empty
-				lockAllThreads = true;
-				while (lockAllThreads) {
-					//do nothing
-				}
+				PebbleGame.this.lockAllThreads = true;
+				return;
 			}
 		}
 		
 		private synchronized void drop() {
 			Random r = new Random();
 			int i = (int)(r.nextDouble()*3);
-			wBags[indexLastHand].givePebble(hand.remove(i));
+			int j = (int)(r.nextDouble()*hand.size());
+			PebbleGame.this.drop(i,hand.remove(j));
 		}
 		
 		private void checkWeight() {
 			if(handWeight()==100 && hand.size()==10) {
-				PebbleGame.this.finishGame();
+				PebbleGame.this.finishGame(hand);
 			}
 		}
 		
