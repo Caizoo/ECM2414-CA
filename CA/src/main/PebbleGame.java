@@ -83,9 +83,15 @@ public class PebbleGame {
 				}
 			}
 		}
+		lockAllThreads=false;
 	}
 	
 	private void priorityCheck() {
+		
+	}
+	
+	protected void finishGame() {
+		lockAllThreads=true;
 		
 	}
 	
@@ -129,6 +135,7 @@ public class PebbleGame {
 					pickUp();
 					checkWeight();
 				}
+				if (lockAllThreads) yield();
 			}
 			
 		}
@@ -147,12 +154,14 @@ public class PebbleGame {
 		}
 		
 		private synchronized void drop() {
-			
+			Random r = new Random();
+			int i = (int)(r.nextDouble()*3);
+			wBags[indexLastHand].givePebble(hand.remove(i));
 		}
 		
 		private void checkWeight() {
 			if(handWeight()==100 && hand.size()==10) {
-				
+				PebbleGame.this.finishGame();
 			}
 		}
 		
