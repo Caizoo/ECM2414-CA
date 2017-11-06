@@ -14,11 +14,12 @@ public class PebbleGame {
 	private static int numPlayers;
 	private static int numPebblesPerBag;
 	
+	private Player[] players;
 	private BlackBag[] bBags; // 0 - X, 1 - Y, 2 - Z
 	private WhiteBag[] wBags;
 	
 	private boolean[] pushDownFlags = {false,false,false};
-	private boolean lockAllThreads = false;
+	protected boolean lockAllThreads = false;
 	private boolean finishedGame = false;
 	
 	public static void main(String[] args) throws IOException {
@@ -41,16 +42,26 @@ public class PebbleGame {
 	public PebbleGame(int numPlayers) {
 		PebbleGame.numPlayers = numPlayers;
 		PebbleGame.numPebblesPerBag = PebbleGame.numPlayers * PebbleGame.PLAYER_PEBBLE_MULTIPLIER;
+		players = new Player[numPlayers];
+		for(int i = 0;i<numPlayers;i++) {
+			players[i] = new Player();
+		}
 		bBags = new BlackBag[3];
 		wBags = new WhiteBag[3];
 		for(int i = 0;i<3;i++) {
 			bBags[i] = new BlackBag(BlackBagType.getType(i));
+			wBags[i] = new WhiteBag(WhiteBagType.getType(i));
+		}
+		for (int i=0;i<numPebblesPerBag;i++) {
+			for (int j=0;j<3;j++) {
+				bBags[j].pebbles.add(new Pebble());
+			}
 		}
 	}
 	
 	public void mainLoop() {
 		while(true) {
-			System.out.println("Looping");
+			fillBags();
 		}
 	}
 	
@@ -63,8 +74,15 @@ public class PebbleGame {
 		
 	}
 	
+	
 	private void fillBags() {
-		
+		if (lockAllThreads) {
+			for (int i=0;i<3;i++) {
+				if (bBags[i].pebbles.size() == 0) {
+					bBags[i].fillPebbles(wBags[i].takeAllPebbles());
+				}
+			}
+		}
 	}
 	
 	private void priorityCheck() {
@@ -105,9 +123,9 @@ public class PebbleGame {
 		
 		public void run() {
 			while(!PebbleGame.this.isDone()) {
-				while(!lock) {
+				while(!lockAllThreads) {
 					drop();
-					if(lock) break;
+					if(lockAllThreads) break;
 					pickUp();
 					checkWeight();
 				}
@@ -115,16 +133,20 @@ public class PebbleGame {
 			
 		}
 		
-		private void pickUp() {
+		private synchronized void pickUp() {
 			int i = chooseRandomBag();
 			hand.add(PebbleGame.this.pickUp(i));
 			this.indexLastHand = i;
 			if(PebbleGame.this.bBags[i].pebbles.size()==0) {
 				// picked bag is empty
+				lockAllThreads = true;
+				while (lockAllThreads) {
+					//do nothing
+				}
 			}
 		}
 		
-		private void drop() {
+		private synchronized void drop() {
 			
 		}
 		
