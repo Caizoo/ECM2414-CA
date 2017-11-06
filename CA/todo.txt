@@ -1,0 +1,6 @@
+Test pebble game with one player
+Test pebble game with two players
+Test pebble game with 5 players
+Output to txt for each player
+Test suites and classes
+Write a README file
