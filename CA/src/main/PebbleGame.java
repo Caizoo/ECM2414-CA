@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 import test.TestPebbleGame;
 
@@ -24,6 +26,7 @@ public class PebbleGame extends Thread {
 	private boolean finishedGame = false;
 	protected boolean bagEmpty = false;
 	protected boolean checkingWin = false;
+	protected static CyclicBarrier gate;
 	
 	public static final Object lock = new Object();
 	
@@ -40,6 +43,7 @@ public class PebbleGame extends Thread {
 			System.out.println("Illegal number of players, must be 1 or greater, please try again");
 			System.exit(1);
 		}
+		gate = new CyclicBarrier(x);
 		PebbleGame game = new PebbleGame(x);
 		game.mainLoop();
 	}
@@ -62,6 +66,15 @@ public class PebbleGame extends Thread {
 	public void mainLoop() {
 		for(Player p:players) {
 			p.start();
+		}
+		try {
+			gate.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BrokenBarrierException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		while(!finishedGame) {
 			// main loop
@@ -100,7 +113,8 @@ public class PebbleGame extends Thread {
 		for(Pebble p:hand) {
 			i+=p.getWeight();
 		}
-		System.out.println(i);
+		System.out.print(i);
+		System.out.print(Thread.currentThread().getName());
 		System.exit(0);
 	}
 	
@@ -135,10 +149,21 @@ public class PebbleGame extends Thread {
 		}
 		
 		public void run() {
+			try {
+				gate.await();
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (BrokenBarrierException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			mainLoop: 
 			while(!PebbleGame.this.isDone()) {
 				System.out.println(Thread.currentThread().getName());
 				drop();
 				while(PebbleGame.this.bagEmpty || PebbleGame.this.checkingWin) {
+					if(PebbleGame.this.isDone()) break mainLoop;
 					try {
 						synchronized(lock) {
 							lock.wait();
