@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import test.TestPebbleGame;
 
-public class PebbleGame {
+public class PebbleGame extends Thread {
 	
 	public static final int PLAYER_PEBBLE_MULTIPLIER = 11;
 	public static final int PLAYER_LIMIT = 20;
@@ -17,12 +17,15 @@ public class PebbleGame {
 	private static int numPebblesPerBag;
 	
 	private Player[] players;
-	private BlackBag[] bBags; // 0 - X, 1 - Y, 2 - Z
-	private WhiteBag[] wBags;
+	private volatile BlackBag[] bBags; // 0 - X, 1 - Y, 2 - Z
+	private volatile WhiteBag[] wBags;
 	
 	private boolean[] pushDownFlags = {false,false,false};
-	protected volatile boolean lockAllThreads = false;
 	private boolean finishedGame = false;
+	protected boolean bagEmpty = false;
+	protected boolean checkingWin = false;
+	
+	public static final Object lock = new Object();
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println("Please enter number of players to start game");
@@ -50,11 +53,6 @@ public class PebbleGame {
 			bBags[i] = new BlackBag(BlackBagType.getType(i));
 			wBags[i] = new WhiteBag(WhiteBagType.getType(i));
 		}
-		for (int i=0;i<numPebblesPerBag;i++) {
-			for (int j=0;j<3;j++) {
-				bBags[j].pebbles.add(new Pebble());
-			}
-		}
 		players = new Player[numPlayers];
 		for(int i = 0;i<numPlayers;i++) {
 			players[i] = new Player();
@@ -66,7 +64,7 @@ public class PebbleGame {
 			p.start();
 		}
 		while(!finishedGame) {
-			fillBags();
+			// main loop
 		}
 		System.exit(0);
 	}
@@ -80,15 +78,15 @@ public class PebbleGame {
 	}
 	
 	
-	private void fillBags() {
-		if (lockAllThreads) {
+	private synchronized void fillBags() {
+		if (bagEmpty) {
 			System.out.println("Filling bags");
 			for (int i=0;i<3;i++) {
 				if (bBags[i].pebbles.size() == 0) {
 					bBags[i].fillPebbles(wBags[i].takeAllPebbles());
 				}
 			}
-			lockAllThreads=false;
+			bagEmpty = false;
 		}
 	}
 	
@@ -97,7 +95,6 @@ public class PebbleGame {
 	}
 	
 	protected void finishGame(ArrayList<Pebble> hand) {
-		lockAllThreads=true;
 		finishedGame=true;
 		TestPebbleGame.printHand(hand);
 		System.out.println("");
@@ -125,8 +122,6 @@ public class PebbleGame {
 	public static int numPebblesPerBag() { return PebbleGame.numPebblesPerBag; }
 	
 	public class Player extends Thread {
-
-		public boolean lock = false;
 		
 		volatile ArrayList<Pebble> hand;
 		int indexLastHand;
@@ -143,29 +138,43 @@ public class PebbleGame {
 		
 		public void run() {
 			while(!PebbleGame.this.isDone()) {
-				while(!PebbleGame.this.lockAllThreads) {
-					drop();
-					TestPebbleGame.printHand(hand);
-					if(PebbleGame.this.lockAllThreads) break;
-					pickUp();
-					TestPebbleGame.printHand(hand);
-					checkWeight();
-					// test calls
+				drop();
+				TestPebbleGame.printHand(hand);
+				while(PebbleGame.this.bagEmpty || PebbleGame.this.checkingWin) {
+					try {
+						synchronized(lock) {
+							lock.wait();
+						}
+					} catch (InterruptedException e) {
+						// do nothing
+					}
 				}
-				if (PebbleGame.this.lockAllThreads) yield();
+				pickUp();
+				TestPebbleGame.printHand(hand);
+				checkWeight();
+				// test calls
 			}
-			
 		}
 		
 		private synchronized void pickUp() {
-			int i = chooseRandomBag();
-			hand.add(PebbleGame.this.pickUp(i));
-			this.indexLastHand = i;
-			if(PebbleGame.this.bBags[i].pebbles.size()==0) {
-				// picked bag is empty
-				PebbleGame.this.lockAllThreads = true;
-				return;
+			try {
+				synchronized(lock) {
+					int i = chooseRandomBag();
+					hand.add(PebbleGame.this.pickUp(i));
+					this.indexLastHand = i;
+					if(PebbleGame.this.bBags[i].pebbles.size()==0) {
+						// picked bag is empty
+						PebbleGame.this.bagEmpty = true;
+						while(PebbleGame.this.bagEmpty) {
+							fillBags();
+							lock.notifyAll();
+						}
+					}
+				}
+			} catch (IndexOutOfBoundsException e) {
+				e.printStackTrace();
 			}
+				
 		}
 		
 		private synchronized void drop() {
@@ -177,7 +186,10 @@ public class PebbleGame {
 		
 		private void checkWeight() {
 			if(handWeight()==100 && hand.size()==10) {
-				PebbleGame.this.finishGame(hand);
+				synchronized(lock) {
+					checkingWin = true;
+					PebbleGame.this.finishGame(hand);
+				}
 			}
 		}
 		

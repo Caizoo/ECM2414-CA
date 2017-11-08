@@ -1,5 +1,7 @@
 package test;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 import main.PebbleGame;
 
 public class TestPlayer {
