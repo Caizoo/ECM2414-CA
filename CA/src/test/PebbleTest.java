@@ -9,17 +9,22 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import main.Pebble;
+
 /**
  * @author cai-b
  *
  */
 public class PebbleTest {
+	
+	static Pebble p;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		p = new Pebble();
 	}
 
 	/**
@@ -27,6 +32,7 @@ public class PebbleTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		p = null;
 	}
 
 	/**
@@ -34,7 +40,7 @@ public class PebbleTest {
 	 */
 	@Test
 	public void testPebble() {
-		fail("Not yet implemented");
+		assertNotEquals(p,null);
 	}
 
 	/**
@@ -42,7 +48,7 @@ public class PebbleTest {
 	 */
 	@Test
 	public void testGetWeight() {
-		fail("Not yet implemented");
+		assertTrue(p.getWeight()>0);
 	}
 
 }

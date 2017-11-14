@@ -9,17 +9,24 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import main.BlackBag;
+import main.BlackBagType;
+
 /**
  * @author cai-b
  *
  */
 public class BlackBagTypeTest {
+	static BlackBag x,y,z;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		x = new BlackBag(BlackBagType.X,11);
+		y = new BlackBag(BlackBagType.Y,11);
+		z = new BlackBag(BlackBagType.Z,11);
 	}
 
 	/**
@@ -27,6 +34,9 @@ public class BlackBagTypeTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		x = null;
+		y = null;
+		z = null;
 	}
 
 	/**
@@ -34,7 +44,9 @@ public class BlackBagTypeTest {
 	 */
 	@Test
 	public void testBlackBagType() {
-		fail("Not yet implemented");
+		assertEquals(x.getType(), BlackBagType.X);
+		assertEquals(y.getType(), BlackBagType.Y);
+		assertEquals(z.getType(), BlackBagType.Z);	
 	}
 
 	/**
@@ -42,7 +54,9 @@ public class BlackBagTypeTest {
 	 */
 	@Test
 	public void testGetIndex() {
-		fail("Not yet implemented");
+		assertEquals(0, x.getType().getIndex());
+		assertEquals(1, y.getType().getIndex());
+		assertEquals(2, z.getType().getIndex());
 	}
 
 	/**
@@ -50,7 +64,9 @@ public class BlackBagTypeTest {
 	 */
 	@Test
 	public void testGetType() {
-		fail("Not yet implemented");
+		assertEquals(x.getType(), BlackBagType.getType(0));
+		assertEquals(y.getType(), BlackBagType.getType(1));
+		assertEquals(z.getType(), BlackBagType.getType(2));
 	}
 
 }

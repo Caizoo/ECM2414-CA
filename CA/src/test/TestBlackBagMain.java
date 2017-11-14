@@ -1,5 +1,7 @@
 package test;
 
+import exceptions.BagOverflowException;
+import exceptions.BagUnderflowException;
 import main.BlackBag;
 import main.BlackBagType;
 import main.Pebble;
@@ -9,7 +11,7 @@ import main.WhiteBagType;
 
 public class TestBlackBagMain {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws BagOverflowException, BagUnderflowException {
 		/**
 		PebbleGame game = new PebbleGame(2);
 		BlackBag b = new BlackBag(BlackBagType.X);
@@ -24,10 +26,10 @@ public class TestBlackBagMain {
 		**/
 		
 		PebbleGame game = new PebbleGame(2);
-		BlackBag b = new BlackBag(BlackBagType.X);
+		BlackBag b = new BlackBag(BlackBagType.X,22);
 		b.printPebbles();
 		System.out.println();
-		WhiteBag w = new WhiteBag(WhiteBagType.A);
+		WhiteBag w = new WhiteBag(WhiteBagType.A,22);
 		w.printPebbles();
 		System.out.println();
 		System.out.println();

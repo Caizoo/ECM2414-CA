@@ -9,17 +9,22 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import main.Bag;
+
 /**
  * @author cai-b
  *
  */
 public class BagTest {
 
+	static Bag b;
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		b = new Bag(11);
 	}
 
 	/**
@@ -27,6 +32,7 @@ public class BagTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		b = null;
 	}
 
 	/**
@@ -34,15 +40,11 @@ public class BagTest {
 	 */
 	@Test
 	public void testBag() {
-		fail("Not yet implemented");
+		assertNotEquals(b,null);
 	}
 
 	/**
 	 * Test method for {@link main.Bag#printPebbles()}.
 	 */
-	@Test
-	public void testPrintPebbles() {
-		fail("Not yet implemented");
-	}
 
 }

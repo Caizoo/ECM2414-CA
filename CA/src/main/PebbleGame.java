@@ -9,6 +9,8 @@ import java.util.Scanner;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+import exceptions.BagOverflowException;
+import exceptions.BagUnderflowException;
 import test.TestPebbleGameMain;
 
 public class PebbleGame extends Thread {
@@ -54,8 +56,8 @@ public class PebbleGame extends Thread {
 		bBags = new BlackBag[3];
 		wBags = new WhiteBag[3];
 		for (int i = 0;i<3;i++) {
-			bBags[i] = new BlackBag(BlackBagType.getType(i));
-			wBags[i] = new WhiteBag(WhiteBagType.getType(i));
+			bBags[i] = new BlackBag(BlackBagType.getType(i),PebbleGame.numPebblesPerBag);
+			wBags[i] = new WhiteBag(WhiteBagType.getType(i),PebbleGame.numPebblesPerBag);
 		}
 		players = new Player[numPlayers];
 		for (int i = 0;i<numPlayers;i++) {
@@ -83,7 +85,12 @@ public class PebbleGame extends Thread {
 	}
 	
 	protected synchronized Pebble pickUp(int i) {
-		return bBags[i].takePebble();
+		try {
+			return bBags[i].takePebble();
+		} catch (BagUnderflowException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	protected synchronized void drop(int i, Pebble p) {
@@ -121,13 +128,22 @@ public class PebbleGame extends Thread {
 	public boolean isDone() { return finishedGame; }
 	
 	protected synchronized Pebble takePebble(int i) {
-		return bBags[i].takePebble();
+		try {
+			return bBags[i].takePebble();
+		} catch (BagUnderflowException e) {
+			e.printStackTrace();
+			return null;
+		}
 		
 		// code for player checking empty bag, calls for lockAllThreads then yields to main thread to fill back
 	}
 	
 	protected synchronized void givePebble(WhiteBagType type, Pebble p) {
-		wBags[type.getIndex()].givePebble(p);
+		try {
+			wBags[type.getIndex()].givePebble(p);
+		} catch (BagOverflowException e) {
+			e.printStackTrace(); // tried to push too many pebbles into bag
+		}
 	}
 	
 	public static int getNumPlayers() { return PebbleGame.numPlayers; }

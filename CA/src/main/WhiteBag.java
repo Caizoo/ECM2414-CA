@@ -3,29 +3,41 @@ package main;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import exceptions.BagOverflowException;
+
 public class WhiteBag extends Bag {
 
 	WhiteBagType type;
 	
-	public WhiteBag(WhiteBagType type) {
-		super();
+	public WhiteBag(WhiteBagType type,int numPebbles) {
+		super(numPebbles);
 		this.type = type;
 	}
 	
-	public synchronized void givePebble(Pebble p) {
-		if(pebbles.size()>PebbleGame.numPebblesPerBag()) {
-			System.out.println("too many pebbles in this bag");
+	public synchronized void givePebble(Pebble p) throws BagOverflowException {
+		if(pebbles.size()>=numPebblesPerBag) {
+			throw new BagOverflowException();
+		}else{
+			pebbles.add(p);
 		}
-		pebbles.add(p);
 	}
 	
 	public synchronized ArrayList<Pebble> takeAllPebbles() {
-		ArrayList<Pebble> p = new ArrayList<Pebble>();
-		for(Pebble ps:super.pebbles) {
-			p.add(ps);
-		}
+		ArrayList<Pebble> p = (ArrayList<Pebble>)(super.pebbles.clone());
 		super.pebbles.clear();
 		return p;
 	}
 	
+	// test functions
+	public int getTotalWeight() {
+		int x = 0;
+		for(Pebble p:super.pebbles) {
+			x += p.getWeight();
+		}
+		return x;
+	}
+		
+	public WhiteBagType getType() { return this.type; }
+	public int getNumPebbles() { return numPebblesPerBag; }
+	public ArrayList<Pebble> getPebbles() { return pebbles; }
 }

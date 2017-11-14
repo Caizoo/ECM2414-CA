@@ -5,21 +5,31 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import main.Pebble;
+import main.WhiteBag;
+import main.WhiteBagType;
 
 /**
  * @author cai-b
  *
  */
 public class WhiteBagTypeTest {
+	static WhiteBag a,b,c;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		a = new WhiteBag(WhiteBagType.A,11);
+		b = new WhiteBag(WhiteBagType.B,11);
+		c = new WhiteBag(WhiteBagType.C,11);
 	}
 
 	/**
@@ -27,6 +37,9 @@ public class WhiteBagTypeTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		a = null;
+		b = null;
+		c = null;
 	}
 
 	/**
@@ -34,7 +47,9 @@ public class WhiteBagTypeTest {
 	 */
 	@Test
 	public void testWhiteBagType() {
-		fail("Not yet implemented");
+		assertEquals(a.getType(), WhiteBagType.A);
+		assertEquals(b.getType(), WhiteBagType.B);
+		assertEquals(c.getType(), WhiteBagType.C);
 	}
 
 	/**
@@ -42,7 +57,9 @@ public class WhiteBagTypeTest {
 	 */
 	@Test
 	public void testGetIndex() {
-		fail("Not yet implemented");
+		assertEquals(0, a.getType().getIndex());
+		assertEquals(1, b.getType().getIndex());
+		assertEquals(2, c.getType().getIndex());
 	}
 
 	/**
@@ -50,7 +67,9 @@ public class WhiteBagTypeTest {
 	 */
 	@Test
 	public void testGetType() {
-		fail("Not yet implemented");
+		assertEquals(a.getType(), WhiteBagType.getType(0));
+		assertEquals(b.getType(), WhiteBagType.getType(1));
+		assertEquals(c.getType(), WhiteBagType.getType(2));
 	}
 
 }
