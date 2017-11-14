@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import main.Pebble;
 import main.PebbleGame;
 
-public class TestPebbleGame {
+public class TestPebbleGameMain {
 	
 	public static void main(String[] args) {
 		PebbleGame game = new PebbleGame(1);

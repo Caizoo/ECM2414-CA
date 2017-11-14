@@ -7,7 +7,7 @@ import main.PebbleGame;
 import main.WhiteBag;
 import main.WhiteBagType;
 
-public class TestBlackBag {
+public class TestBlackBagMain {
 	
 	public static void main(String[] args) {
 		/**

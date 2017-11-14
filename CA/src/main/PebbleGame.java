@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
-import test.TestPebbleGame;
+import test.TestPebbleGameMain;
 
 public class PebbleGame extends Thread {
 	
@@ -30,7 +30,7 @@ public class PebbleGame extends Thread {
 	
 	public static final Object lock = new Object();
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		System.out.println("Please enter number of players to start game");
 		int x = 0;
 		try {
@@ -108,7 +108,7 @@ public class PebbleGame extends Thread {
 	
 	protected void finishGame(ArrayList<Pebble> hand) {
 		finishedGame=true;
-		TestPebbleGame.printHand(hand);
+		TestPebbleGameMain.printHand(hand);
 		int i = 0;
 		for(Pebble p:hand) {
 			i+=p.getWeight();

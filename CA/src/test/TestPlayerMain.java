@@ -4,7 +4,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import main.PebbleGame;
 
-public class TestPlayer {
+public class TestPlayerMain {
 
 	public static void main(String[] args) {
 		PebbleGame g = new PebbleGame(1);
