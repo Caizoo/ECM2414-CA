@@ -49,6 +49,7 @@ public class PebbleTest {
 	@Test
 	public void testGetWeight() {
 		assertTrue(p.getWeight()>0);
+		assertTrue(p.getWeight()<=30);
 	}
 
 }

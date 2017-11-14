@@ -5,21 +5,30 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.concurrent.CyclicBarrier;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import main.Pebble;
+import main.PebbleGame;
 
 /**
  * @author cai-b
  *
  */
 public class PebbleGameTest {
+	
+	static PebbleGame game;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		
 	}
 
 	/**
@@ -27,14 +36,7 @@ public class PebbleGameTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
-	 * Test method for {@link main.PebbleGame#main(java.lang.String[])}.
-	 */
-	@Test
-	public void testMain() {
-		fail("Not yet implemented");
+		game = null;
 	}
 
 	/**
@@ -42,63 +44,17 @@ public class PebbleGameTest {
 	 */
 	@Test
 	public void testPebbleGame() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link main.PebbleGame#mainLoop()}.
-	 */
-	@Test
-	public void testMainLoop() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link main.PebbleGame#pickUp(int)}.
-	 */
-	@Test
-	public void testPickUp() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link main.PebbleGame#drop(int, main.Pebble)}.
-	 */
-	@Test
-	public void testDrop() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link main.PebbleGame#finishGame(java.util.ArrayList)}.
-	 */
-	@Test
-	public void testFinishGame() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link main.PebbleGame#isDone()}.
-	 */
-	@Test
-	public void testIsDone() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link main.PebbleGame#takePebble(int)}.
-	 */
-	@Test
-	public void testTakePebble() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link main.PebbleGame#givePebble(main.WhiteBagType, main.Pebble)}.
-	 */
-	@Test
-	public void testGivePebble() {
-		fail("Not yet implemented");
+		game = new PebbleGame(5);
+		game.gate = new CyclicBarrier(6);
+		assertNotEquals(game,null);
+		ArrayList<Pebble> winningHand = game.mainLoop();
+		System.out.println(winningHand);
+		assertTrue(game.isDone());
+		int totalWeight = 0;
+		for(Pebble p:winningHand) {
+			totalWeight += p.getWeight();
+		}
+		assertEquals(totalWeight, 100);
 	}
 
 	/**
@@ -106,7 +62,8 @@ public class PebbleGameTest {
 	 */
 	@Test
 	public void testGetNumPlayers() {
-		fail("Not yet implemented");
+		game = new PebbleGame(2);
+		assertEquals(game.getNumPlayers(),2);
 	}
 
 	/**
@@ -114,7 +71,8 @@ public class PebbleGameTest {
 	 */
 	@Test
 	public void testNumPebblesPerBag() {
-		fail("Not yet implemented");
+		game = new PebbleGame(2);
+		assertEquals(game.numPebblesPerBag(),22);
 	}
 
 }

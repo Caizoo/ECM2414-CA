@@ -24,13 +24,13 @@ public class PebbleGame extends Thread {
 	private volatile BlackBag[] bBags; // 0 - X, 1 - Y, 2 - Z
 	private volatile WhiteBag[] wBags;
 	
-	private boolean[] pushDownFlags = {false,false,false};
-	private boolean finishedGame = false;
+	private volatile boolean finishedGame = false;
 	protected boolean bagEmpty = false;
 	protected boolean checkingWin = false;
-	protected static CyclicBarrier gate;
+	public static CyclicBarrier gate;
 	
 	public static final Object lock = new Object();
+	public ArrayList<Pebble> winningHand;
 	
 	public static void main(String[] args) {
 		System.out.println("Please enter number of players to start game");
@@ -48,6 +48,7 @@ public class PebbleGame extends Thread {
 		gate = new CyclicBarrier(x);
 		PebbleGame game = new PebbleGame(x);
 		game.mainLoop();
+		System.exit(0);
 	}
 	
 	public PebbleGame(int numPlayers) {
@@ -61,11 +62,15 @@ public class PebbleGame extends Thread {
 		}
 		players = new Player[numPlayers];
 		for (int i = 0;i<numPlayers;i++) {
-			players[i] = new Player();
+			try {
+				players[i] = new Player(i+1);
+			} catch (BagUnderflowException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
-	public void mainLoop() {
+	public ArrayList<Pebble> mainLoop() {
 		for (Player p:players) {
 			p.start();
 		}
@@ -81,19 +86,14 @@ public class PebbleGame extends Thread {
 		while (!finishedGame) {
 			// main loop
 		}
-		System.exit(0);
+		return winningHand;
 	}
 	
-	protected synchronized Pebble pickUp(int i) {
-		try {
-			return bBags[i].takePebble();
-		} catch (BagUnderflowException e) {
-			e.printStackTrace();
-			return null;
-		}
+	protected synchronized Pebble pickUp(int i) throws BagUnderflowException {
+		return bBags[i].takePebble();
 	}
 	
-	protected synchronized void drop(int i, Pebble p) {
+	protected synchronized void drop(int i, Pebble p) throws BagOverflowException {
 		wBags[i].pebbles.add(p);
 	}
 	
@@ -109,42 +109,12 @@ public class PebbleGame extends Thread {
 		}
 	}
 	
-	private void priorityCheck() {
-		
-	}
-	
 	protected void finishGame(ArrayList<Pebble> hand) {
 		finishedGame=true;
-		TestPebbleGameMain.printHand(hand);
-		int i = 0;
-		for (Pebble p:hand) {
-			i += p.getWeight();
-		}
-		System.out.print(i);
-		System.out.print(Thread.currentThread().getName());
-		System.exit(0);
+		winningHand = hand;
 	}
 	
 	public boolean isDone() { return finishedGame; }
-	
-	protected synchronized Pebble takePebble(int i) {
-		try {
-			return bBags[i].takePebble();
-		} catch (BagUnderflowException e) {
-			e.printStackTrace();
-			return null;
-		}
-		
-		// code for player checking empty bag, calls for lockAllThreads then yields to main thread to fill back
-	}
-	
-	protected synchronized void givePebble(WhiteBagType type, Pebble p) {
-		try {
-			wBags[type.getIndex()].givePebble(p);
-		} catch (BagOverflowException e) {
-			e.printStackTrace(); // tried to push too many pebbles into bag
-		}
-	}
 	
 	public static int getNumPlayers() { return PebbleGame.numPlayers; }
 	public static int numPebblesPerBag() { return PebbleGame.numPebblesPerBag; }
@@ -153,9 +123,11 @@ public class PebbleGame extends Thread {
 		
 		volatile ArrayList<Pebble> hand;
 		int indexLastHand;
+		int playerIndex;
 		
-		public Player() {
+		public Player(int playerIndex) throws BagUnderflowException {
 			hand = new ArrayList<Pebble>();
+			this.playerIndex = playerIndex;
 			int b = 0;
 			for (int i=0;i<10;i++) {
 				b = chooseRandomBag();
@@ -177,8 +149,9 @@ public class PebbleGame extends Thread {
 			mainLoop: 
 			while (!PebbleGame.this.isDone()) {
 				System.out.println(Thread.currentThread().getName());
+				if(PebbleGame.this.isDone()) break;
 				drop();
-				while (PebbleGame.this.bagEmpty || PebbleGame.this.checkingWin) {
+				while (PebbleGame.this.bagEmpty) {
 					if (PebbleGame.this.isDone()) break mainLoop;
 					try {
 						synchronized(lock) {
@@ -190,17 +163,27 @@ public class PebbleGame extends Thread {
 				}
 				pickUp();
 				checkWeight();
-				// test calls
 			}
+			
 		}
 		
-		private synchronized void pickUp() {
+		private synchronized void pickUp()  {
 			try {
 				synchronized(lock) {
-					int i = chooseRandomBag();
-					hand.add(PebbleGame.this.pickUp(i));
-					this.indexLastHand = i;
-					if (PebbleGame.this.bBags[i].pebbles.size()==0) {
+					int i = -1;
+					try {
+						i = chooseRandomBag();
+						hand.add(PebbleGame.this.pickUp(i));
+						this.indexLastHand = i;
+					} catch (BagUnderflowException e) {
+						// picked bag is empty
+						PebbleGame.this.bagEmpty = true;
+						while (PebbleGame.this.bagEmpty) {
+							fillBags();
+							lock.notifyAll();
+						}
+					}
+					if (i>=0 && PebbleGame.this.bBags[i].pebbles.size()==0) {
 						// picked bag is empty
 						PebbleGame.this.bagEmpty = true;
 						while (PebbleGame.this.bagEmpty) {
@@ -219,7 +202,12 @@ public class PebbleGame extends Thread {
 			Random r = new Random();
 			int i = (int)(r.nextDouble()*3);
 			int j = (int)(r.nextDouble()*hand.size());
-			PebbleGame.this.drop(i,hand.remove(j));
+			try {
+				PebbleGame.this.drop(i,hand.remove(j));
+			} catch (BagOverflowException e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
 		}
 		
 		private void checkWeight() {
@@ -227,6 +215,7 @@ public class PebbleGame extends Thread {
 				synchronized(lock) {
 					checkingWin = true;
 					PebbleGame.this.finishGame(hand);
+					System.out.println(playerIndex);
 				}
 			}
 		}
