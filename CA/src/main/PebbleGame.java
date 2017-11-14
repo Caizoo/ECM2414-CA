@@ -39,7 +39,7 @@ public class PebbleGame extends Thread {
 			if(x <= 0 || x > PebbleGame.PLAYER_LIMIT) {
 				throw new NumberFormatException();
 			}
-		}catch (NumberFormatException | InputMismatchException e) {
+		} catch (NumberFormatException | InputMismatchException e) {
 			System.out.println("Illegal number of players, must be 1 or greater, please try again");
 			System.exit(1);
 		}
@@ -53,18 +53,18 @@ public class PebbleGame extends Thread {
 		PebbleGame.numPebblesPerBag = PebbleGame.numPlayers * PebbleGame.PLAYER_PEBBLE_MULTIPLIER;
 		bBags = new BlackBag[3];
 		wBags = new WhiteBag[3];
-		for(int i = 0;i<3;i++) {
+		for (int i = 0;i<3;i++) {
 			bBags[i] = new BlackBag(BlackBagType.getType(i));
 			wBags[i] = new WhiteBag(WhiteBagType.getType(i));
 		}
 		players = new Player[numPlayers];
-		for(int i = 0;i<numPlayers;i++) {
+		for (int i = 0;i<numPlayers;i++) {
 			players[i] = new Player();
 		}
 	}
 	
 	public void mainLoop() {
-		for(Player p:players) {
+		for (Player p:players) {
 			p.start();
 		}
 		try {
@@ -76,7 +76,7 @@ public class PebbleGame extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		while(!finishedGame) {
+		while (!finishedGame) {
 			// main loop
 		}
 		System.exit(0);
@@ -94,7 +94,7 @@ public class PebbleGame extends Thread {
 	private synchronized void fillBags() {
 		if (bagEmpty) {
 			for (int i=0;i<3;i++) {
-				if (bBags[i].pebbles.size() == 0) {
+				if (bBags[i].pebbles.size()==0) {
 					bBags[i].fillPebbles(wBags[i].takeAllPebbles());
 				}
 			}
@@ -110,8 +110,8 @@ public class PebbleGame extends Thread {
 		finishedGame=true;
 		TestPebbleGameMain.printHand(hand);
 		int i = 0;
-		for(Pebble p:hand) {
-			i+=p.getWeight();
+		for (Pebble p:hand) {
+			i += p.getWeight();
 		}
 		System.out.print(i);
 		System.out.print(Thread.currentThread().getName());
@@ -141,7 +141,7 @@ public class PebbleGame extends Thread {
 		public Player() {
 			hand = new ArrayList<Pebble>();
 			int b = 0;
-			for(int i = 0;i<10;i++) {
+			for (int i=0;i<10;i++) {
 				b = chooseRandomBag();
 				hand.add(PebbleGame.this.pickUp(b));
 			}
@@ -159,11 +159,11 @@ public class PebbleGame extends Thread {
 				e1.printStackTrace();
 			}
 			mainLoop: 
-			while(!PebbleGame.this.isDone()) {
+			while (!PebbleGame.this.isDone()) {
 				System.out.println(Thread.currentThread().getName());
 				drop();
-				while(PebbleGame.this.bagEmpty || PebbleGame.this.checkingWin) {
-					if(PebbleGame.this.isDone()) break mainLoop;
+				while (PebbleGame.this.bagEmpty || PebbleGame.this.checkingWin) {
+					if (PebbleGame.this.isDone()) break mainLoop;
 					try {
 						synchronized(lock) {
 							lock.wait();
@@ -184,10 +184,10 @@ public class PebbleGame extends Thread {
 					int i = chooseRandomBag();
 					hand.add(PebbleGame.this.pickUp(i));
 					this.indexLastHand = i;
-					if(PebbleGame.this.bBags[i].pebbles.size()==0) {
+					if (PebbleGame.this.bBags[i].pebbles.size()==0) {
 						// picked bag is empty
 						PebbleGame.this.bagEmpty = true;
-						while(PebbleGame.this.bagEmpty) {
+						while (PebbleGame.this.bagEmpty) {
 							fillBags();
 							lock.notifyAll();
 						}
@@ -207,7 +207,7 @@ public class PebbleGame extends Thread {
 		}
 		
 		private void checkWeight() {
-			if(handWeight()==100 && hand.size()==10) {
+			if (handWeight()==100 && hand.size()==10) {
 				synchronized(lock) {
 					checkingWin = true;
 					PebbleGame.this.finishGame(hand);
@@ -217,7 +217,7 @@ public class PebbleGame extends Thread {
 		
 		public int handWeight() {
 			int weight = 0;
-			for(Pebble p:hand) {
+			for (Pebble p:hand) {
 				weight += p.getWeight();
 			}
 			return weight;
