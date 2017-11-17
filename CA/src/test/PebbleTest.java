@@ -40,7 +40,7 @@ public class PebbleTest {
 	 */
 	@Test
 	public void testPebble() {
-		assertNotEquals(p,null);
+		assertNotNull(p);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class PebbleTest {
 	 */
 	@Test
 	public void testGetWeight() {
-		assertTrue(p.getWeight()>0);
+		assertTrue(p.getWeight()>0); // assert weight of pebble is between 1 and 30
 		assertTrue(p.getWeight()<=30);
 	}
 

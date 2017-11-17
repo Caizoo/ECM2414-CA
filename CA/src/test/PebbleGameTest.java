@@ -44,18 +44,18 @@ public class PebbleGameTest {
 	 */
 	@Test
 	public void testPebbleGame() {
-		game = new PebbleGame(5);
+		game = new PebbleGame(5); // make a game with 5 players
 		game.gate = new CyclicBarrier(6);
-		assertNotEquals(game,null);
-		ArrayList<Pebble> winningHand = game.mainLoop();
-		System.out.println(winningHand);
+		assertNotNull(game); // make sure the game isn't null
+		ArrayList<Pebble> winningHand = game.mainLoop(); // return the winning hand after game loop has finished
 		assertTrue(game.isDone());
 		int totalWeight = 0;
 		for(Pebble p:winningHand) {
 			totalWeight += p.getWeight();
 		}
-		assertEquals(totalWeight, 100);
-	}
+		assertEquals(totalWeight, 100); // assert the winning hand is indeed correct
+		assertEquals(winningHand.size(),10);
+	} 
 
 	/**
 	 * Test method for {@link main.PebbleGame#getNumPlayers()}.
@@ -63,7 +63,7 @@ public class PebbleGameTest {
 	@Test
 	public void testGetNumPlayers() {
 		game = new PebbleGame(2);
-		assertEquals(game.getNumPlayers(),2);
+		assertEquals(game.getNumPlayers(),2); // make sure this is set correctly
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class PebbleGameTest {
 	@Test
 	public void testNumPebblesPerBag() {
 		game = new PebbleGame(2);
-		assertEquals(game.numPebblesPerBag(),22);
+		assertEquals(game.numPebblesPerBag(),22); // make sure max pebbles per bag is indeed 11 times number of players
 	}
 
 }

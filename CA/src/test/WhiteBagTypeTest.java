@@ -46,7 +46,7 @@ public class WhiteBagTypeTest {
 	 * Test method for {@link main.WhiteBagType#WhiteBagType(int)}.
 	 */
 	@Test
-	public void testWhiteBagType() {
+	public void testWhiteBagType() { // assert the type is correct
 		assertEquals(a.getType(), WhiteBagType.A);
 		assertEquals(b.getType(), WhiteBagType.B);
 		assertEquals(c.getType(), WhiteBagType.C);
@@ -56,7 +56,7 @@ public class WhiteBagTypeTest {
 	 * Test method for {@link main.WhiteBagType#getIndex()}.
 	 */
 	@Test
-	public void testGetIndex() {
+	public void testGetIndex() { // assert the get index function works correctly
 		assertEquals(0, a.getType().getIndex());
 		assertEquals(1, b.getType().getIndex());
 		assertEquals(2, c.getType().getIndex());
@@ -66,7 +66,7 @@ public class WhiteBagTypeTest {
 	 * Test method for {@link main.WhiteBagType#getType(int)}.
 	 */
 	@Test
-	public void testGetType() {
+	public void testGetType() { // assert get type from index works correctly
 		assertEquals(a.getType(), WhiteBagType.getType(0));
 		assertEquals(b.getType(), WhiteBagType.getType(1));
 		assertEquals(c.getType(), WhiteBagType.getType(2));

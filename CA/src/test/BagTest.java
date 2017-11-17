@@ -40,7 +40,7 @@ public class BagTest {
 	 */
 	@Test
 	public void testBag() {
-		assertNotEquals(b,null);
+		assertNotEquals(b,null); // assert a bag object is created
 	}
 
 	/**

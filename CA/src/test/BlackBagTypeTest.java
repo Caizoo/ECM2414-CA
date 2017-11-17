@@ -43,7 +43,7 @@ public class BlackBagTypeTest {
 	 * Test method for {@link main.BlackBagType#BlackBagType(int)}.
 	 */
 	@Test
-	public void testBlackBagType() {
+	public void testBlackBagType() { // assert the type is correct
 		assertEquals(x.getType(), BlackBagType.X);
 		assertEquals(y.getType(), BlackBagType.Y);
 		assertEquals(z.getType(), BlackBagType.Z);	
@@ -53,7 +53,7 @@ public class BlackBagTypeTest {
 	 * Test method for {@link main.BlackBagType#getIndex()}.
 	 */
 	@Test
-	public void testGetIndex() {
+	public void testGetIndex() { // assert the get index function works correctly
 		assertEquals(0, x.getType().getIndex());
 		assertEquals(1, y.getType().getIndex());
 		assertEquals(2, z.getType().getIndex());
@@ -63,7 +63,7 @@ public class BlackBagTypeTest {
 	 * Test method for {@link main.BlackBagType#getType(int)}.
 	 */
 	@Test
-	public void testGetType() {
+	public void testGetType() { // assert get type from index works correctly
 		assertEquals(x.getType(), BlackBagType.getType(0));
 		assertEquals(y.getType(), BlackBagType.getType(1));
 		assertEquals(z.getType(), BlackBagType.getType(2));

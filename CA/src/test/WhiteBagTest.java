@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -31,6 +32,10 @@ public class WhiteBagTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		a = new WhiteBag(WhiteBagType.A,11); // 11 max pebbles for an instance of 1 player game 
+	}
+	
+	@Before
+	public void setUpBefore() throws Exception { // before each method, create a list of pebbles to use
 		pebbles = new ArrayList<Pebble>();
 		for(int i=0;i<11;i++) {
 			pebbles.add(new Pebble());
@@ -51,7 +56,7 @@ public class WhiteBagTest {
 	 */
 	@Test
 	public void testWhiteBag() {
-		assertEquals(11, a.getNumPebbles());
+		assertEquals(11, a.getNumPebbles()); // assert number of pebbles is correct and bag type is correct
 		assertEquals(WhiteBagType.A, a.getType());
 	}
 
@@ -62,18 +67,17 @@ public class WhiteBagTest {
 	public void testGivePebble() {
 		Pebble p = new Pebble();
 		try {
-			a.givePebble(p);
+			a.givePebble(p); // try to give pebble
 		} catch (BagOverflowException e) {
 			
 		}
-		assertEquals(1, a.getPebbles().size());
-		assertEquals(a.getPebbles().get(0), p);
+		assertEquals(1, a.getPebbles().size()); // assert a single pebble has been given to white bag
+		assertEquals(a.getPebbles().get(0), p); // assert it's the same pebble
 		boolean hasOverflowed = false;
-		for(int i=0;i<20;i++) {
+		for(int i=0;i<20;i++) { // try and push 20 pebbles into a bag fit only for 11
 			try {
 				a.givePebble(new Pebble());
 			} catch (BagOverflowException e) {
-				assertNotEquals(e.getLocalizedMessage(), null);
 				hasOverflowed = true;
 			}
 		}
@@ -86,19 +90,21 @@ public class WhiteBagTest {
 	 */
 	@Test
 	public void testTakeAllPebbles() {
-		for(int i=0;i<11;i++) {
+		for(int i=0;i<11;i++) { // fill the bag completely
 			try {
 				a.givePebble(new Pebble());
 			} catch (BagOverflowException e) {
 				// do nothing
 			}
 		}
-		ArrayList<Pebble> tempBag = (ArrayList<Pebble>) a.getPebbles().clone();
-		assertEquals(tempBag, a.getPebbles());
-		ArrayList<Pebble> takenPebbles = a.takeAllPebbles();
-		assertNotEquals(takenPebbles, a.getPebbles());
+		@SuppressWarnings("unchecked")
+		ArrayList<Pebble> tempBag = (ArrayList<Pebble>) a.getPebbles().clone(); // make a copy of the list, same pebble objects
+		assertEquals(tempBag, a.getPebbles()); // make sure they're equal
+		ArrayList<Pebble> takenPebbles = a.takeAllPebbles(); // take all pebbles
+		assertNotEquals(takenPebbles, a.getPebbles()); 
 		assertNotEquals(tempBag, a.getPebbles());
-		assertEquals(takenPebbles, tempBag);
+		assertEquals(takenPebbles, tempBag); // make sure the taken list and original list in bag are the same
+		assertEquals(0,a.getPebbles().size()); // make sure bag is now empty
 	}
 	
 	/**
@@ -106,9 +112,6 @@ public class WhiteBagTest {
 	 */
 	@Test
 	public void testGetTotalWeight() {
-		pebbles = new ArrayList<Pebble>();
-		for(int i=0;i<11;i++) { pebbles.add(new Pebble()); }
-		
 		for(int i=0;i<11;i++) {
 			try {
 				a.givePebble(new Pebble());
