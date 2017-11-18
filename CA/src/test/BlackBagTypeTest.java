@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import main.BlackBag;
 import main.BlackBagType;
+import main.WhiteBagType;
 
 /**
  * @author cai-b
@@ -67,6 +68,13 @@ public class BlackBagTypeTest {
 		assertEquals(x.getType(), BlackBagType.getType(0));
 		assertEquals(y.getType(), BlackBagType.getType(1));
 		assertEquals(z.getType(), BlackBagType.getType(2));
+	}
+	
+	@Test
+	public void testGameBagName() { // assert get name of bag works correctly
+		assertEquals(BlackBagType.getBagName(0),'X');
+		assertEquals(BlackBagType.getBagName(1),'Y');
+		assertEquals(BlackBagType.getBagName(2),'Z');
 	}
 
 }

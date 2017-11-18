@@ -42,6 +42,17 @@ public class PebbleTest {
 	public void testPebble() {
 		assertNotNull(p);
 	}
+	
+	@Test
+	public void testSetWeight() {
+		int pW = p.getWeight(); // try to change weight of pebble
+		if(pW > 15) {
+			p.setWeight(pW-5); // +/- 5 to avoid going under 1 or over 30 as a weight
+		}else {
+			p.setWeight(pW+5);
+		}
+		assertNotEquals(pW,p.getWeight()); // assert weight has been changed
+	}
 
 	/**
 	 * Test method for {@link main.Pebble#getWeight()}.

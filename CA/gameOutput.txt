@@ -1,0 +1,352 @@
+Player 2 has discarded 3 to bag A
+Player 2 hand is 23,11,20,11,13,13,22,22,21
+Player 2 has drawn 12 from bag X
+Player 2 hand is 23,11,20,11,13,13,22,22,21,12
+Player 2 has discarded 22 to bag C
+Player 2 hand is 23,11,20,11,13,13,22,21,12
+Player 2 has drawn 2 from bag Z
+Player 2 hand is 23,11,20,11,13,13,22,21,12,2
+Player 2 has discarded 11 to bag B
+Player 2 hand is 23,11,20,13,13,22,21,12,2
+Player 2 has drawn 15 from bag Z
+Player 2 hand is 23,11,20,13,13,22,21,12,2,15
+Player 2 has discarded 23 to bag C
+Player 2 hand is 11,20,13,13,22,21,12,2,15
+Player 2 has drawn 11 from bag X
+Player 2 hand is 11,20,13,13,22,21,12,2,15,11
+Player 2 has discarded 13 to bag C
+Player 2 hand is 11,20,13,22,21,12,2,15,11
+Player 2 has drawn 8 from bag Y
+Player 2 hand is 11,20,13,22,21,12,2,15,11,8
+Player 2 has discarded 22 to bag C
+Player 2 hand is 11,20,13,21,12,2,15,11,8
+Player 2 has drawn 4 from bag Y
+Player 2 hand is 11,20,13,21,12,2,15,11,8,4
+Player 2 has discarded 15 to bag B
+Player 2 hand is 11,20,13,21,12,2,11,8,4
+Player 2 has drawn 17 from bag X
+Player 2 hand is 11,20,13,21,12,2,11,8,4,17
+Player 2 has discarded 4 to bag C
+Player 2 hand is 11,20,13,21,12,2,11,8,17
+Player 2 has drawn 17 from bag Z
+Player 2 hand is 11,20,13,21,12,2,11,8,17,17
+Player 2 has discarded 20 to bag A
+Player 2 hand is 11,13,21,12,2,11,8,17,17
+Player 2 has drawn 2 from bag Y
+Player 2 hand is 11,13,21,12,2,11,8,17,17,2
+Player 2 has discarded 17 to bag B
+Player 2 hand is 11,13,21,12,2,11,8,17,2
+Player 2 has drawn 4 from bag X
+Player 2 hand is 11,13,21,12,2,11,8,17,2,4
+Player 2 has discarded 12 to bag B
+Player 2 hand is 11,13,21,2,11,8,17,2,4
+Player 2 has drawn 13 from bag X
+Player 2 hand is 11,13,21,2,11,8,17,2,4,13
+Player 2 has discarded 21 to bag B
+Player 2 hand is 11,13,2,11,8,17,2,4,13
+Player 2 has drawn 8 from bag Y
+Player 2 hand is 11,13,2,11,8,17,2,4,13,8
+Player 2 has discarded 8 to bag B
+Player 2 hand is 11,13,2,11,17,2,4,13,8
+Player 2 has drawn 18 from bag X
+Player 2 hand is 11,13,2,11,17,2,4,13,8,18
+Player 2 has discarded 11 to bag A
+Player 2 hand is 11,13,2,17,2,4,13,8,18
+Player 2 has drawn 13 from bag Z
+Player 2 hand is 11,13,2,17,2,4,13,8,18,13
+Player 2 has discarded 2 to bag C
+Player 2 hand is 11,13,17,2,4,13,8,18,13
+Player 2 has drawn 12 from bag Y
+Player 2 hand is 11,13,17,2,4,13,8,18,13,12
+Player 2 has discarded 13 to bag A
+Player 2 hand is 11,13,17,2,4,8,18,13,12
+Player 2 has drawn 30 from bag X
+Player 2 hand is 11,13,17,2,4,8,18,13,12,30
+Player 2 has discarded 30 to bag C
+Player 2 hand is 11,13,17,2,4,8,18,13,12
+Player 2 has drawn 28 from bag Y
+Player 2 hand is 11,13,17,2,4,8,18,13,12,28
+Player 2 has discarded 8 to bag B
+Player 2 hand is 11,13,17,2,4,18,13,12,28
+Player 2 has drawn 17 from bag Z
+Player 2 hand is 11,13,17,2,4,18,13,12,28,17
+Player 2 has discarded 12 to bag C
+Player 2 hand is 11,13,17,2,4,18,13,28,17
+Player 2 has drawn 19 from bag X
+Player 2 hand is 11,13,17,2,4,18,13,28,17,19
+Player 2 has discarded 18 to bag A
+Player 2 hand is 11,13,17,2,4,13,28,17,19
+Player 2 has drawn 5 from bag Z
+Player 2 hand is 11,13,17,2,4,13,28,17,19,5
+Player 2 has discarded 13 to bag B
+Player 2 hand is 11,17,2,4,13,28,17,19,5
+Player 2 has drawn 15 from bag Y
+Player 2 hand is 11,17,2,4,13,28,17,19,5,15
+Player 2 has discarded 17 to bag B
+Player 2 hand is 11,2,4,13,28,17,19,5,15
+Player 2 has drawn 18 from bag Y
+Player 2 hand is 11,2,4,13,28,17,19,5,15,18
+Player 2 has discarded 5 to bag A
+Player 2 hand is 11,2,4,13,28,17,19,15,18
+Player 2 has drawn 4 from bag Y
+Player 2 hand is 11,2,4,13,28,17,19,15,18,4
+Player 2 has discarded 28 to bag C
+Player 2 hand is 11,2,4,13,17,19,15,18,4
+Player 1 has discarded 28 to bag A
+Player 1 hand is 21,24,16,19,15,19,8,12,26
+Player 2 has drawn 18 from bag X
+Player 2 hand is 11,2,4,13,17,19,15,18,4,18
+Player 2 has discarded 17 to bag B
+Player 2 hand is 11,2,4,13,19,15,18,4,18
+Player 2 has drawn 27 from bag Z
+Player 2 hand is 11,2,4,13,19,15,18,4,18,27
+Player 2 has discarded 13 to bag A
+Player 2 hand is 11,2,4,19,15,18,4,18,27
+Player 2 has drawn 4 from bag Y
+Player 2 hand is 11,2,4,19,15,18,4,18,27,4
+Player 2 has discarded 4 to bag C
+Player 2 hand is 11,2,4,19,15,18,18,27,4
+Player 2 has drawn 22 from bag Z
+Player 2 hand is 11,2,4,19,15,18,18,27,4,22
+Player 2 has discarded 18 to bag B
+Player 2 hand is 11,2,4,19,15,18,27,4,22
+Player 2 has drawn 23 from bag Y
+Player 2 hand is 11,2,4,19,15,18,27,4,22,23
+Player 2 has discarded 4 to bag A
+Player 2 hand is 11,2,4,19,15,18,27,22,23
+Player 2 has drawn 8 from bag Z
+Player 2 hand is 11,2,4,19,15,18,27,22,23,8
+Player 2 has discarded 27 to bag A
+Player 2 hand is 11,2,4,19,15,18,22,23,8
+Player 2 has drawn 12 from bag Y
+Player 2 hand is 11,2,4,19,15,18,22,23,8,12
+Player 2 has discarded 15 to bag A
+Player 2 hand is 11,2,4,19,18,22,23,8,12
+Player 2 has drawn 7 from bag Y
+Player 2 hand is 11,2,4,19,18,22,23,8,12,7
+Player 2 has discarded 22 to bag B
+Player 2 hand is 11,2,4,19,18,23,8,12,7
+Player 2 has drawn 1 from bag X
+Player 2 hand is 11,2,4,19,18,23,8,12,7,1
+Player 2 has discarded 7 to bag B
+Player 2 hand is 11,2,4,19,18,23,8,12,1
+Player 2 has drawn 1 from bag Y
+Player 2 hand is 11,2,4,19,18,23,8,12,1,1
+Player 2 has discarded 12 to bag C
+Player 2 hand is 11,2,4,19,18,23,8,1,1
+Player 2 has drawn 18 from bag Z
+Player 2 hand is 11,2,4,19,18,23,8,1,1,18
+Player 2 has discarded 18 to bag C
+Player 2 hand is 11,2,4,19,18,23,8,1,1
+Player 2 has drawn 7 from bag X
+Player 2 hand is 11,2,4,19,18,23,8,1,1,7
+Player 2 has discarded 1 to bag B
+Player 2 hand is 11,2,4,19,18,23,8,1,7
+Player 2 has drawn 27 from bag X
+Player 2 hand is 11,2,4,19,18,23,8,1,7,27
+Player 2 has discarded 4 to bag A
+Player 2 hand is 11,2,19,18,23,8,1,7,27
+Player 2 has drawn 23 from bag Z
+Player 2 hand is 11,2,19,18,23,8,1,7,27,23
+Player 2 has discarded 19 to bag C
+Player 2 hand is 11,2,18,23,8,1,7,27,23
+Player 2 has drawn 12 from bag X
+Player 2 hand is 11,2,18,23,8,1,7,27,23,12
+Player 2 has discarded 12 to bag C
+Player 2 hand is 11,2,18,23,8,1,7,27,23
+Player 2 has drawn 8 from bag Y
+Player 2 hand is 11,2,18,23,8,1,7,27,23,8
+Player 2 has discarded 8 to bag B
+Player 2 hand is 11,2,18,23,1,7,27,23,8
+Player 2 has drawn 5 from bag X
+Player 2 hand is 11,2,18,23,1,7,27,23,8,5
+Player 2 has discarded 27 to bag C
+Player 2 hand is 11,2,18,23,1,7,23,8,5
+Player 2 has drawn 12 from bag Z
+Player 2 hand is 11,2,18,23,1,7,23,8,5,12
+Player 2 has discarded 12 to bag B
+Player 2 hand is 11,2,18,23,1,7,23,8,5
+Player 2 has drawn 4 from bag Z
+Player 2 hand is 11,2,18,23,1,7,23,8,5,4
+Player 2 has discarded 11 to bag C
+Player 2 hand is 2,18,23,1,7,23,8,5,4
+Player 2 has drawn 18 from bag X
+Player 2 hand is 2,18,23,1,7,23,8,5,4,18
+Player 2 has discarded 18 to bag C
+Player 2 hand is 2,23,1,7,23,8,5,4,18
+Player 2 has drawn 20 from bag X
+Player 2 hand is 2,23,1,7,23,8,5,4,18,20
+Player 2 has discarded 20 to bag A
+Player 2 hand is 2,23,1,7,23,8,5,4,18
+Player 2 has drawn 13 from bag Z
+Player 2 hand is 2,23,1,7,23,8,5,4,18,13
+Player 2 has discarded 23 to bag A
+Player 2 hand is 2,1,7,23,8,5,4,18,13
+Player 2 has drawn 27 from bag X
+Player 2 hand is 2,1,7,23,8,5,4,18,13,27
+Player 2 has discarded 13 to bag A
+Player 2 hand is 2,1,7,23,8,5,4,18,27
+Player 2 has drawn 13 from bag X
+Player 2 hand is 2,1,7,23,8,5,4,18,27,13
+Player 2 has discarded 1 to bag C
+Player 2 hand is 2,7,23,8,5,4,18,27,13
+Player 2 has drawn 25 from bag Z
+Player 2 hand is 2,7,23,8,5,4,18,27,13,25
+Player 2 has discarded 25 to bag B
+Player 2 hand is 2,7,23,8,5,4,18,27,13
+Player 2 has drawn 14 from bag Z
+Player 2 hand is 2,7,23,8,5,4,18,27,13,14
+Player 2 has discarded 7 to bag B
+Player 2 hand is 2,23,8,5,4,18,27,13,14
+Player 1 has drawn 21 from bag Y
+Player 1 hand is 21,24,16,19,15,19,8,12,26,21
+Player 2 has drawn 3 from bag X
+Player 2 hand is 2,23,8,5,4,18,27,13,14,3
+Player 2 has discarded 4 to bag C
+Player 2 hand is 2,23,8,5,18,27,13,14,3
+Player 2 has drawn 17 from bag Y
+Player 2 hand is 2,23,8,5,18,27,13,14,3,17
+Player 2 has discarded 8 to bag C
+Player 2 hand is 2,23,5,18,27,13,14,3,17
+Player 2 has drawn 13 from bag X
+Player 2 hand is 2,23,5,18,27,13,14,3,17,13
+Player 2 has discarded 5 to bag B
+Player 2 hand is 2,23,18,27,13,14,3,17,13
+Player 2 has drawn 13 from bag Y
+Player 2 hand is 2,23,18,27,13,14,3,17,13,13
+Player 2 has discarded 13 to bag B
+Player 2 hand is 2,23,18,27,14,3,17,13,13
+Player 2 has drawn 30 from bag Z
+Player 2 hand is 2,23,18,27,14,3,17,13,13,30
+Player 2 has discarded 14 to bag A
+Player 2 hand is 2,23,18,27,3,17,13,13,30
+Player 2 has drawn 13 from bag Z
+Player 2 hand is 2,23,18,27,3,17,13,13,30,13
+Player 2 has discarded 30 to bag C
+Player 2 hand is 2,23,18,27,3,17,13,13,13
+Player 2 has drawn 4 from bag X
+Player 2 hand is 2,23,18,27,3,17,13,13,13,4
+Player 2 has discarded 27 to bag B
+Player 2 hand is 2,23,18,3,17,13,13,13,4
+Player 2 has drawn 4 from bag X
+Player 2 hand is 2,23,18,3,17,13,13,13,4,4
+Player 2 has discarded 3 to bag C
+Player 2 hand is 2,23,18,17,13,13,13,4,4
+Player 2 has drawn 23 from bag Z
+Player 2 hand is 2,23,18,17,13,13,13,4,4,23
+Player 2 has discarded 13 to bag A
+Player 2 hand is 2,23,18,17,13,13,4,4,23
+Player 2 has drawn 15 from bag Y
+Player 2 hand is 2,23,18,17,13,13,4,4,23,15
+Player 2 has discarded 23 to bag A
+Player 2 hand is 2,18,17,13,13,4,4,23,15
+Player 2 has drawn 5 from bag X
+Player 2 hand is 2,18,17,13,13,4,4,23,15,5
+Player 2 has discarded 15 to bag B
+Player 2 hand is 2,18,17,13,13,4,4,23,5
+Player 2 has drawn 17 from bag Y
+Player 2 hand is 2,18,17,13,13,4,4,23,5,17
+Player 2 has discarded 13 to bag B
+Player 2 hand is 2,18,17,13,4,4,23,5,17
+Player 2 has drawn 18 from bag X
+Player 2 hand is 2,18,17,13,4,4,23,5,17,18
+Player 2 has discarded 17 to bag A
+Player 2 hand is 2,18,13,4,4,23,5,17,18
+Player 2 has drawn 15 from bag X
+Player 2 hand is 2,18,13,4,4,23,5,17,18,15
+Player 2 has discarded 2 to bag A
+Player 2 hand is 18,13,4,4,23,5,17,18,15
+Player 2 has drawn 11 from bag X
+Player 2 hand is 18,13,4,4,23,5,17,18,15,11
+Player 2 has discarded 5 to bag C
+Player 2 hand is 18,13,4,4,23,17,18,15,11
+Player 2 has drawn 22 from bag Y
+Player 2 hand is 18,13,4,4,23,17,18,15,11,22
+Player 2 has discarded 4 to bag C
+Player 2 hand is 18,13,4,23,17,18,15,11,22
+Player 2 has drawn 28 from bag X
+Player 2 hand is 18,13,4,23,17,18,15,11,22,28
+Player 2 has discarded 28 to bag A
+Player 2 hand is 18,13,4,23,17,18,15,11,22
+Player 2 has drawn 12 from bag Z
+Player 2 hand is 18,13,4,23,17,18,15,11,22,12
+Player 2 has discarded 17 to bag A
+Player 2 hand is 18,13,4,23,18,15,11,22,12
+Player 2 has drawn 11 from bag Y
+Player 2 hand is 18,13,4,23,18,15,11,22,12,11
+Player 2 has discarded 4 to bag B
+Player 2 hand is 18,13,23,18,15,11,22,12,11
+Player 2 has drawn 18 from bag Z
+Player 2 hand is 18,13,23,18,15,11,22,12,11,18
+Player 2 has discarded 13 to bag C
+Player 2 hand is 18,23,18,15,11,22,12,11,18
+Player 2 has drawn 8 from bag Z
+Player 2 hand is 18,23,18,15,11,22,12,11,18,8
+Player 2 has discarded 22 to bag A
+Player 2 hand is 18,23,18,15,11,12,11,18,8
+Player 2 has drawn 17 from bag Y
+Player 2 hand is 18,23,18,15,11,12,11,18,8,17
+Player 2 has discarded 15 to bag A
+Player 2 hand is 18,23,18,11,12,11,18,8,17
+Player 2 has drawn 1 from bag Y
+Player 2 hand is 18,23,18,11,12,11,18,8,17,1
+Player 2 has discarded 23 to bag A
+Player 2 hand is 18,18,11,12,11,18,8,17,1
+Player 2 has drawn 14 from bag X
+Player 2 hand is 18,18,11,12,11,18,8,17,1,14
+Player 2 has discarded 8 to bag B
+Player 2 hand is 18,18,11,12,11,18,17,1,14
+Player 2 has drawn 20 from bag X
+Player 2 hand is 18,18,11,12,11,18,17,1,14,20
+Player 2 has discarded 18 to bag B
+Player 2 hand is 18,18,11,12,11,17,1,14,20
+Player 2 has drawn 11 from bag Z
+Player 2 hand is 18,18,11,12,11,17,1,14,20,11
+Player 2 has discarded 17 to bag C
+Player 2 hand is 18,18,11,12,11,1,14,20,11
+Player 2 has drawn 4 from bag Z
+Player 2 hand is 18,18,11,12,11,1,14,20,11,4
+Player 2 has discarded 11 to bag A
+Player 2 hand is 18,18,11,12,1,14,20,11,4
+Player 2 has drawn 19 from bag Z
+Player 2 hand is 18,18,11,12,1,14,20,11,4,19
+Player 2 has discarded 20 to bag A
+Player 2 hand is 18,18,11,12,1,14,11,4,19
+Player 2 has drawn 8 from bag Y
+Player 2 hand is 18,18,11,12,1,14,11,4,19,8
+Player 2 has discarded 19 to bag B
+Player 2 hand is 18,18,11,12,1,14,11,4,8
+Player 1 has discarded 8 to bag B
+Player 1 hand is 21,24,16,19,15,19,12,26,21
+Player 2 has drawn 23 from bag X
+Player 2 hand is 18,18,11,12,1,14,11,4,8,23
+Player 2 has discarded 12 to bag C
+Player 2 hand is 18,18,11,1,14,11,4,8,23
+Player 2 has drawn 23 from bag X
+Player 2 hand is 18,18,11,1,14,11,4,8,23,23
+Player 2 has discarded 18 to bag C
+Player 2 hand is 18,11,1,14,11,4,8,23,23
+Player 2 has drawn 17 from bag X
+Player 2 hand is 18,11,1,14,11,4,8,23,23,17
+Player 2 has discarded 18 to bag C
+Player 2 hand is 11,1,14,11,4,8,23,23,17
+Player 2 has drawn 28 from bag X
+Player 2 hand is 11,1,14,11,4,8,23,23,17,28
+Player 2 has discarded 11 to bag A
+Player 2 hand is 1,14,11,4,8,23,23,17,28
+Player 2 has drawn 2 from bag X
+Player 2 hand is 1,14,11,4,8,23,23,17,28,2
+Player 2 has discarded 28 to bag C
+Player 2 hand is 1,14,11,4,8,23,23,17,2
+Player 2 has drawn 13 from bag X
+Player 2 hand is 1,14,11,4,8,23,23,17,2,13
+Player 2 has discarded 23 to bag A
+Player 2 hand is 1,14,11,4,8,23,17,2,13
+Player 2 has drawn 7 from bag Y
+Player 2 hand is 1,14,11,4,8,23,17,2,13,7
+
+
+ Player 2 has won with hand:
+1,14,11,4,8,23,17,2,13,7
+Player 1 has drawn 12 from bag Z
+Player 1 hand is 21,24,16,19,15,19,12,26,21,12

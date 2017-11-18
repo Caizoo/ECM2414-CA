@@ -71,5 +71,12 @@ public class WhiteBagTypeTest {
 		assertEquals(b.getType(), WhiteBagType.getType(1));
 		assertEquals(c.getType(), WhiteBagType.getType(2));
 	}
+	
+	@Test
+	public void testGameBagName() { // assert get name of bag works correctly
+		assertEquals(WhiteBagType.getBagName(0),'A');
+		assertEquals(WhiteBagType.getBagName(1),'B');
+		assertEquals(WhiteBagType.getBagName(2),'C');
+	}
 
 }

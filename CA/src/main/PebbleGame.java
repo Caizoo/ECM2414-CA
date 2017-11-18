@@ -30,34 +30,50 @@ public class PebbleGame extends Thread {
 	
 	public static final Object lock = new Object();
 	public ArrayList<Pebble> winningHand;
+	public volatile static ArrayList<String> turns;
 	
 	public static void main(String[] args) {
-		System.out.println("Please enter number of players to start game");
 		int x = 0;
-		try {
-			Scanner sc = new Scanner(System.in);
-			x = sc.nextInt();
-			if(x <= 0 || x > PebbleGame.PLAYER_LIMIT) {
-				throw new NumberFormatException();
-			}
-		} catch (NumberFormatException | InputMismatchException e) {
-			System.out.println("Illegal number of players, must be 1 or greater, please try again");
-			System.exit(1);
+		ArrayList<Pebble> pebbles;
+		while(true) {
+			x = ReadWriteFile.getNumPlayers();
+			if(x<1) continue;
+			pebbles = ReadWriteFile.readPebbles(x);
+			if(pebbles==null) continue;
+			break;
 		}
-		gate = new CyclicBarrier(x);
-		PebbleGame game = new PebbleGame(x);
+		
+		gate = new CyclicBarrier(x+1);
+		PebbleGame game = new PebbleGame(pebbles,x);
 		game.mainLoop();
+		try {
+			ReadWriteFile.writeToFile("gameOutput.txt", turns);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		System.exit(0);
 	}
 	
-	public PebbleGame(int numPlayers) {
+	public static ArrayList<Pebble> splitPebbleList(ArrayList<Pebble> pebbles, int bagIndex) {
+		ArrayList<Pebble> rtnPebbles = new ArrayList<Pebble>();
+		for(int i=bagIndex*PebbleGame.numPebblesPerBag;i<bagIndex*PebbleGame.numPebblesPerBag+PebbleGame.numPebblesPerBag;i++) {
+			rtnPebbles.add(pebbles.get(i));
+		}
+		return rtnPebbles;
+	}
+	
+	public PebbleGame(ArrayList<Pebble> pebbles,int numPlayers) {
 		PebbleGame.numPlayers = numPlayers;
 		PebbleGame.numPebblesPerBag = PebbleGame.numPlayers * PebbleGame.PLAYER_PEBBLE_MULTIPLIER;
+		turns = new ArrayList<String>();
 		bBags = new BlackBag[3];
 		wBags = new WhiteBag[3];
 		for (int i = 0;i<3;i++) {
 			bBags[i] = new BlackBag(BlackBagType.getType(i),PebbleGame.numPebblesPerBag);
 			wBags[i] = new WhiteBag(WhiteBagType.getType(i),PebbleGame.numPebblesPerBag);
+		}
+		for(int i=0;i<3;i++) {
+			bBags[i].fillPebbles(PebbleGame.splitPebbleList(pebbles,i));
 		}
 		players = new Player[numPlayers];
 		for (int i = 0;i<numPlayers;i++) {
@@ -76,10 +92,8 @@ public class PebbleGame extends Thread {
 		try {
 			gate.await();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (BrokenBarrierException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		while (!finishedGame) {
@@ -147,7 +161,6 @@ public class PebbleGame extends Thread {
 			}
 			mainLoop: 
 			while (!PebbleGame.this.isDone()) {
-				System.out.println(Thread.currentThread().getName());
 				if(PebbleGame.this.isDone()) break;
 				drop();
 				while (PebbleGame.this.bagEmpty) {
@@ -167,32 +180,40 @@ public class PebbleGame extends Thread {
 		}
 		
 		private synchronized void pickUp()  {
-			try {
-				synchronized(lock) {
-					int i = -1;
-					try {
-						i = chooseRandomBag();
-						hand.add(PebbleGame.this.pickUp(i));
-						this.indexLastHand = i;
-					} catch (BagUnderflowException e) {
-						// picked bag is empty
-						PebbleGame.this.bagEmpty = true;
-						while (PebbleGame.this.bagEmpty) {
-							fillBags();
-							lock.notifyAll();
+			boolean looped = false;
+			mainLoop:
+			while(true&&!looped) {
+				try {
+					synchronized(lock) {
+						int i = -1;
+						try {
+							i = chooseRandomBag();
+							Pebble p = PebbleGame.this.pickUp(i);
+							hand.add(p);
+							this.indexLastHand = i;
+							looped = true;
+							turns.add("Player "+this.playerIndex+" has drawn "+p.getWeight()+" from bag "+BlackBagType.getBagName(i)+"\n"+"Player "+this.playerIndex+" hand is "+PebbleGame.drawHand(hand));
+							break mainLoop;
+						} catch (BagUnderflowException e) {
+							// picked bag is empty
+							PebbleGame.this.bagEmpty = true;
+							while (PebbleGame.this.bagEmpty) {
+								fillBags();
+								lock.notifyAll();
+							}
+						}
+						if (i>=0 && PebbleGame.this.bBags[i].pebbles.size()==0) {
+							// picked bag is empty
+							PebbleGame.this.bagEmpty = true;
+							while (PebbleGame.this.bagEmpty) {
+								fillBags();
+								lock.notifyAll();
+							}
 						}
 					}
-					if (i>=0 && PebbleGame.this.bBags[i].pebbles.size()==0) {
-						// picked bag is empty
-						PebbleGame.this.bagEmpty = true;
-						while (PebbleGame.this.bagEmpty) {
-							fillBags();
-							lock.notifyAll();
-						}
-					}
+				} catch (IndexOutOfBoundsException e) {
+					e.printStackTrace();
 				}
-			} catch (IndexOutOfBoundsException e) {
-				e.printStackTrace();
 			}
 				
 		}
@@ -202,7 +223,9 @@ public class PebbleGame extends Thread {
 			int i = (int)(r.nextDouble()*3);
 			int j = (int)(r.nextDouble()*hand.size());
 			try {
-				PebbleGame.this.drop(i,hand.remove(j));
+				Pebble p = hand.remove(j);
+				PebbleGame.this.drop(i,p);
+				turns.add("Player "+this.playerIndex+" has discarded "+p.getWeight()+" to bag "+WhiteBagType.getBagName(i)+"\n"+"Player "+this.playerIndex+" hand is "+PebbleGame.drawHand(hand));
 			} catch (BagOverflowException e) {
 				e.printStackTrace();
 				System.exit(-1);
@@ -213,8 +236,8 @@ public class PebbleGame extends Thread {
 			if (handWeight()==100 && hand.size()==10) {
 				synchronized(lock) {
 					checkingWin = true;
+					turns.add("\n\n Player "+this.playerIndex+" has won with hand:\n"+drawHand(this.hand));
 					PebbleGame.this.finishGame(hand);
-					System.out.println(playerIndex);
 				}
 			}
 		}
@@ -232,7 +255,15 @@ public class PebbleGame extends Thread {
 			return (int)(r.nextDouble()*3);
 		}
 		
-		
+	}
+	
+	public static String drawHand(ArrayList<Pebble> hand) {
+		String s = "";
+		for(Pebble p:hand) {
+			s += p.getWeight()+",";
+		}
+		s = s.substring(0,s.length()-1);
+		return s;
 	}
 
 }

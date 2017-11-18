@@ -10,11 +10,8 @@ public class BlackBag extends Bag {
 	BlackBagType type;
 	
 	public BlackBag(BlackBagType type, int numPebbles) {
-		super(numPebbles);
+		super(numPebbles); // set max number of pebbles
 		this.type = type;
-		for(int i = 0;i<numPebbles;i++) {
-			super.pebbles.add(new Pebble());
-		}
 	}
 	
 	public synchronized Pebble takePebble() throws BagUnderflowException {
@@ -22,17 +19,15 @@ public class BlackBag extends Bag {
 		int index = (int)(r.nextDouble()*pebbles.size());
 		try {
 			return pebbles.remove(index);
-		} catch (IndexOutOfBoundsException e) {
+		} catch (IndexOutOfBoundsException e) { // if trying to remove from empty bag, throw underflow exception
 			throw new BagUnderflowException();
 		}
 	}
 	
-	public void fillPebbles(ArrayList<Pebble> p) {
+	public void fillPebbles(ArrayList<Pebble> p) { // simply change the arraylist variable to point to new arraylist of pebbles
 		super.pebbles = p;
 	}
 	
-	
-	// test functions
 	public int getTotalWeight() {
 		int x = 0;
 		for(Pebble p:super.pebbles) {
