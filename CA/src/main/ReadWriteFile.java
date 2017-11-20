@@ -64,6 +64,7 @@ public class ReadWriteFile {
 			while((line=buffer.readLine())!=null) {
 				lines.add(line);
 			}
+			fileReader.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
