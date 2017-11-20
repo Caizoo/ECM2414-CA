@@ -82,8 +82,13 @@ public class ReadWriteFile {
 		String line = "";
 		Iterator iter = message.iterator(); // iterate through list
 		while(iter.hasNext()) {
-			buffer.write((String)(iter.next())); // write line and make new line
-			buffer.newLine();
+			try {
+				buffer.write((String)(iter.next())); // write line and make new line
+				buffer.newLine();
+			} catch (NullPointerException e) {
+				// do nothing, end of file
+			}
+			
 		}
 		buffer.flush(); // flush buffer to file
 		fileWriter.close();
