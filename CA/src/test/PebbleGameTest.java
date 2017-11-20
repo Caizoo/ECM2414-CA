@@ -45,6 +45,7 @@ public class PebbleGameTest {
 		ArrayList<Pebble> winningHand = game.mainLoop(); // return the winning hand after game loop has finished
 		assertTrue(game.isDone());
 		int totalWeight = 0;
+		if(winningHand==null) fail("Game loop returned null arraylist for winning hand");
 		for(Pebble p:winningHand) { // make sure winning hand is actually a winning hand
 			totalWeight += p.getWeight();
 		}

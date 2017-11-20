@@ -11,6 +11,6 @@ import org.junit.runners.Suite.SuiteClasses;
 /*
  * IMPORTANT: When running test, possible coverage may change as bags may not be refilled in some games
  */
-public class AllTests {   
+public class AllTests {
 	// nothing
 }
